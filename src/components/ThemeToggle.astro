@@ -1,0 +1,100 @@
+<style>
+  .theme-toggle {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 9999px; /* Pill shape */
+    padding: 0.25rem;
+    width: 3.5rem; /* Fixed width */
+    height: 1.75rem; /* Fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    position: relative;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--accent);
+  }
+
+  .theme-toggle .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: var(--text-main);
+    z-index: 10;
+    transition: color 0.3s ease;
+  }
+
+  .theme-toggle .ball {
+    position: absolute;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    background-color: var(--accent);
+    top: 0.125rem; /* (height - ball_height) / 2 */
+    left: 0.25rem;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  html.dark .theme-toggle .ball {
+    transform: translateX(1.75rem); /* width - ball_width - padding_left_right */
+  }
+</style>
+
+<button id="theme-toggle" class="theme-toggle" title="Toggles light & dark" aria-label="auto" aria-live="polite">
+  <span class="sr-only">Toggle theme</span>
+  <!-- Sun Icon -->
+  <svg class="icon sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="5"></circle>
+    <line x1="12" y1="1" x2="12" y2="3"></line>
+    <line x1="12" y1="21" x2="12" y2="23"></line>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+    <line x1="1" y1="12" x2="3" y2="12"></line>
+    <line x1="21" y1="12" x2="23" y2="12"></line>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+  </svg>
+  <!-- Moon Icon -->
+  <svg class="icon moon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>
+  <span class="ball"></span>
+</button>
+
+<script is:inline>
+  const getTheme = () => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+    return "light";
+  };
+
+  const theme = getTheme();
+
+  if (theme === "light") {
+    document.documentElement.classList.remove("dark");
+  } else {
+    document.documentElement.classList.add("dark");
+  }
+  // Save the initial theme choice to be consistent
+  localStorage.setItem("theme", theme);
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const themeToggle = document.getElementById("theme-toggle");
+
+    themeToggle.addEventListener("click", () => {
+      const currentTheme = localStorage.getItem("theme");
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+      document.documentElement.classList.toggle("dark", newTheme === "dark");
+      localStorage.setItem("theme", newTheme);
+    });
+  });
+</script>

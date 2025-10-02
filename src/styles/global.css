@@ -1,155 +1,245 @@
 /*
-  The CSS in this style tag is based off of Bear Blog's default CSS.
-  https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
-  License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
-
+  Theme: Light & Dark
+  - Light (default)
+  - Dark (when .dark class is applied to html)
+*/
+@import "tailwindcss";
 :root {
-	--accent: #2337ff;
-	--accent-dark: #000d8a;
-	--black: 15, 18, 25;
-	--gray: 96, 115, 159;
-	--gray-light: 229, 233, 240;
-	--gray-dark: 34, 41, 57;
-	--gray-gradient: rgba(var(--gray-light), 50%), #fff;
-	--box-shadow:
-		0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%), 0 16px 32px
-		rgba(var(--gray), 33%);
+  --accent: #007acc; /* A professional blue for the light theme */
+  --accent-dark: #005a99;
+  --bg-main: #ffffff; /* White background */
+  --bg-secondary: #f0f0f0; /* Light grey for cards/code blocks */
+  --text-main: #222222; /* Dark grey for body text */
+  --text-secondary: #555555; /* Medium grey for secondary text */
+  --border-color: #dddddd;
+  --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --bg-body: var(--bg-main); /* Define bg-body to be used in body */
 }
+
+html.dark {
+  --accent: #00e0b8; /* Vibrant teal/mint for dark theme */
+  --accent-dark: #00a380;
+  --bg-main: #1a1a1a; /* Very dark grey */
+  --bg-secondary: #2a2a2a; /* Slightly lighter grey */
+  --text-main: #e0e0e0; /* Off-white */
+  --text-secondary: #b3b3b3; /* Dimmer grey */
+  --border-color: #3a3a3a;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
 @font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-regular.woff") format("woff");
-	font-weight: 400;
-	font-style: normal;
-	font-display: swap;
+  font-family: "Atkinson";
+  src: url("/fonts/atkinson-regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
+
 @font-face {
-	font-family: "Atkinson";
-	src: url("/fonts/atkinson-bold.woff") format("woff");
-	font-weight: 700;
-	font-style: normal;
-	font-display: swap;
+  font-family: "Atkinson";
+  src: url("/fonts/atkinson-bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
+
 body {
-	font-family: "Atkinson", sans-serif;
-	margin: 0;
-	padding: 0;
-	text-align: left;
-	background: linear-gradient(var(--gray-gradient)) no-repeat;
-	background-size: 100% 600px;
-	word-wrap: break-word;
-	overflow-wrap: break-word;
-	color: rgb(var(--gray-dark));
-	font-size: 20px;
-	line-height: 1.7;
+  font-family: "Atkinson", sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  font-size: 18px;
+  line-height: 1.7;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
 main {
-	width: 720px;
-	max-width: calc(100% - 2em);
-	margin: auto;
-	padding: 3em 1em;
+  width: 720px;
+  max-width: calc(100% - 2em);
+  margin: auto;
+  padding: 3em 1em;
 }
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf") format("truetype");
+  font-weight: 100 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/DM_Sans/DMSans-Italic-VariableFont_opsz,wght.ttf") format("truetype");
+  font-weight: 100 1000;
+  font-style: italic;
+  font-display: swap;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-	margin: 0 0 0.5rem 0;
-	color: rgb(var(--black));
-	line-height: 1.2;
-}
-h1 {
-	font-size: 3.052em;
-}
-h2 {
-	font-size: 2.441em;
-}
-h3 {
-	font-size: 1.953em;
-}
-h4 {
-	font-size: 1.563em;
-}
-h5 {
-	font-size: 1.25em;
-}
-strong,
-b {
-	font-weight: 700;
-}
-a {
-	color: var(--accent);
-}
-a:hover {
-	color: var(--accent);
-}
-p {
-	margin-bottom: 1em;
-}
-.prose p {
-	margin-bottom: 2em;
-}
-textarea {
-	width: 100%;
-	font-size: 16px;
-}
-input {
-	font-size: 16px;
-}
-table {
-	width: 100%;
-}
-img {
-	max-width: 100%;
-	height: auto;
-	border-radius: 8px;
-}
-code {
-	padding: 2px 5px;
-	background-color: rgb(var(--gray-light));
-	border-radius: 2px;
-}
-pre {
-	padding: 1.5em;
-	border-radius: 8px;
-}
-pre > code {
-	all: unset;
-}
-blockquote {
-	border-left: 4px solid var(--accent);
-	padding: 0 0 0 20px;
-	margin: 0px;
-	font-size: 1.333em;
-}
-hr {
-	border: none;
-	border-top: 1px solid rgb(var(--gray-light));
-}
-@media (max-width: 720px) {
-	body {
-		font-size: 18px;
-	}
-	main {
-		padding: 1em;
-	}
+  margin: 0 0 0.5rem 0;
+  color: var(--accent);
+  line-height: 1.2;
+  font-weight: 700;
+  font-family: "DM Sans", sans-serif;
 }
 
+h1 {
+  font-size: 2.8em;
+}
+h2 {
+  font-size: 2.2em;
+}
+h3 {
+  font-size: 1.8em;
+}
+h4 {
+  font-size: 1.4em;
+}
+h5 {
+  font-size: 1.2em;
+}
+
+strong,
+b {
+  font-weight: 700;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-dark);
+  text-decoration: underline;
+}
+
+p {
+  margin-bottom: 1.5em;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+code {
+  padding: 3px 6px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+pre {
+  padding: 1.5em;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+pre > code {
+  all: unset;
+  font-size: 0.9em;
+}
+
+blockquote {
+  border-left: 4px solid var(--accent);
+  padding: 0 0 0 20px;
+  margin: 0 0 1.5em 0;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+.tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+                margin-top: 0.5rem;
+            }
+            .tag {
+                background-color: var(--accent-gradient);
+                color: var(--text-main);
+                padding: 0.25rem 0.75rem;
+                border-radius: 12px;
+                text-decoration: none;
+                font-size: 0.8em;
+				transition: all 0.5s ease;
+				text-transform: capitalize;
+
+            }
+			.tag:hover{
+				background-color: var(--accent-dark);
+				color: var(--bg-main);
+				transition: all 0.5s ease;
+			}
+			.post-img{
+				aspect-ratio: 3 / 2;
+				object-fit: cover;
+			}
+.logo{
+	object-fit: cover;
+	max-width: 150px;
+	aspect-ratio: 16/9;
+}
+.email-input, .email-input:focus-visible{
+  border:none;
+  border-bottom:2px solid var(--accent);
+  border-left:1px solid var(--accent);
+  color:var(--text-main);
+  outline: none;
+  outline-offset: none;
+}
+.form-btn{
+  background-color: var(--accent);
+  color:#fff;
+  padding: 10px 40px;
+}
+@media (max-width: 720px) {
+  body {
+    font-size: 16px;
+  }
+  main {
+    padding: 1.5em 1em;
+  }
+  h1 { font-size: 2.4em; }
+  h2 { font-size: 2em; }
+}
+.bg{
+  background-color: var(--bg-body) !important;
+}
 .sr-only {
-	border: 0;
-	padding: 0;
-	margin: 0;
-	position: absolute !important;
-	height: 1px;
-	width: 1px;
-	overflow: hidden;
-	/* IE6, IE7 - a 0 height clip, off to the bottom right of the visible 1px box */
-	clip: rect(1px 1px 1px 1px);
-	/* maybe deprecated but we need to support legacy browsers */
-	clip: rect(1px, 1px, 1px, 1px);
-	/* modern browsers, clip-path works inwards from each corner */
-	clip-path: inset(50%);
-	/* added line to stop words getting smushed together (as they go onto separate lines and some screen readers do not understand line feeds as a space */
-	white-space: nowrap;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+a{
+	text-decoration: none !important;
+
 }
